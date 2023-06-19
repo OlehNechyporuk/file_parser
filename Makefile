@@ -3,6 +3,7 @@ install:
 	docker-compose exec -w /code/app php-fpm-parser composer install
 	docker-compose exec -w /code/app php-fpm-parser npm install
 	docker-compose exec -w /code/app php-fpm-parser npm run build
+	docker-compose exec -w /code/app php-fpm-parser mkdir public/uploads/wp/result
 	
 front_dev:
 	docker-compose exec -w /code/app php-fpm-parser npm run dev-server
