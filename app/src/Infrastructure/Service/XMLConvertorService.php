@@ -12,18 +12,21 @@ class XMLConvertorService implements ConvertServiceInterface
 {
     private DatabaseRepositoryInterface $repository;
     private ParseServiceInterface $service;
+    private string $folder;
 
     public function __construct(
         DatabaseRepositoryInterface $repository,
-        ParseServiceInterface $service
+        ParseServiceInterface $service,
+        string $folder
     ) {
         $this->repository = $repository;
         $this->service = $service;
+        $this->folder = $folder;
     }
 
     public function __invoke(string $filename, array $files)
     {
-        $handle = fopen('/code/app/public/uploads/wp/result/'.$filename.'.xml', 'w+');
+        $handle = fopen($this->folder . $filename.'.xml', 'w+');
 
         $start_xml = '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL.'<posts>';
         fwrite($handle, $start_xml.PHP_EOL);

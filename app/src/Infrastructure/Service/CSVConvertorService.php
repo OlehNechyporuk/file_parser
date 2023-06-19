@@ -12,18 +12,21 @@ class CSVConvertorService implements ConvertServiceInterface
 {
     private DatabaseRepositoryInterface $repository;
     private ParseServiceInterface $service;
+    private string $folder;
 
     public function __construct(
         DatabaseRepositoryInterface $repository,
-        ParseServiceInterface $service
+        ParseServiceInterface $service,
+        string $folder
     ) {
         $this->repository = $repository;
         $this->service = $service;
+        $this->folder = $folder;
     }
 
     public function __invoke(string $filename, array $files)
     {
-        $handle = fopen('/code/app/public/uploads/wp/result/'.$filename.'.csv', 'w+');
+        $handle = fopen($this->folder . $filename.'.csv', 'w+');
 
         foreach ($files as $name) {
             $iterator = $this->repository->read($this->repository->getPathByName($name));

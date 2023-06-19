@@ -25,18 +25,23 @@ class ParseFilesCommand extends Command
     protected static $defaultName = 'parse:sql-wp-files';
 
     private ParseServiceInterface $service;
+
     private DatabaseRepositoryInterface $repository;
 
     private AdapterInterface $cache;
+
+    private string $folder;
 
     public function __construct(
         WpFileParseService $service,
         WPFileDatabaseRepository $repository,
         AdapterInterface $cache,
+        string $wpResultDir
         ) {
         $this->cache = $cache;
         $this->service = $service;
         $this->repository = $repository;
+        $this->folder = $wpResultDir;
 
         parent::__construct();
     }
@@ -68,11 +73,11 @@ class ParseFilesCommand extends Command
         }
 
         if (OutputFileType::csv == $v) {
-            $convertor = new CSVConvertorService($this->repository, $this->service);
+            $convertor = new CSVConvertorService($this->repository, $this->service, $this->folder);
         } elseif (OutputFileType::txt == $v) {
-            $convertor = new TXTConvertorService($this->repository, $this->service);
+            $convertor = new TXTConvertorService($this->repository, $this->service, $this->folder);
         } elseif (OutputFileType::xml == $v) {
-            $convertor = new XMLConvertorService($this->repository, $this->service);
+            $convertor = new XMLConvertorService($this->repository, $this->service, $this->folder);
         }
 
         $useCase = new ParseFilesUseCase($convertor);
