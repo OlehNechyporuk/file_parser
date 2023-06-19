@@ -24,7 +24,7 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-public/uploads/wp/result/*
+public/uploads/wp/result/*.*
 
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php
