@@ -1,0 +1,18 @@
+index:
+   path: /
+   controller: App\Infrastructure\Controller\IndexController::index
+
+add:
+   path: /add
+   controller: App\Infrastructure\Controller\IndexController::add
+   methods: [POST]
+
+check:
+   path: /check
+   controller: App\Infrastructure\Controller\IndexController::check
+   methods: [POST]
+
+delete:
+   path: /delete/{name}/{type}
+   controller: App\Infrastructure\Controller\IndexController::delete
+   methods: [GET]

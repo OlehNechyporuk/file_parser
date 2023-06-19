@@ -1,0 +1,26 @@
+.loader {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    background: rgba($color: #000, $alpha: 0.3);
+    text-align: center;
+    display: none;
+    .spinner-border {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+    }
+}
+
+.controlls {
+    display: none;
+}
+
+.load,
+.load-all {
+    color: #fff
+}
+.hide {
+    display: none;
+}

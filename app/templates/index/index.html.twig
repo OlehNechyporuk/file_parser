@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WP DB parser
+{% endblock %}
+
+{% block body %}
+	<div class="loader">
+		<div class="spinner-border text-primary" role="status">
+			<span class="sr-only"></span>
+		</div>
+	</div>
+	<div class="container">
+		<div class="col-md-12">
+			<h2>Files</h2>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col"></th>
+						<th scope="col">Name</th>
+						<th scope="col"></th>
+
+					</tr>
+				</thead>
+				<tbody>
+					{% for i, file in files %}
+
+						<tr>
+							<th>{{ i+1 }}</th>
+							<td><img src="/img/file.svg" width="20" alt=""/>
+								{{ file.getName }}
+								||
+								{{ file.getSize|formatBytes(1)}}
+							</td>
+							<th>
+								<input class="select-control" type="checkbox" value="{{ file.getName }}">
+							</th>
+						</tr>
+					{% endfor %}
+
+
+				</tbody>
+			</table>
+		</div>
+		<div class="row controlls">
+			<div class="col-md-12">
+				<div class="mb-2">Parse and downloads:
+					<span class="files"></span>
+				</div>
+				<a href="{{ path('add') }}" data-type="csv" class="load-all btn btn-info">
+					Run csv
+				</a>
+				<a href="{{ path('add') }}" data-type="xml" class="load-all btn btn-primary">
+					Run xml
+				</a>
+				<a href="{{ path('add') }}" data-type="txt" class="load-all btn btn-warning">Run txt
+				</a>
+			</div>
+		</div>
+
+		<div class="row">
+			<h3>Jobs</h3>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Name</th>
+						<th scope="col">Desc</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody id="result" data-url="{{ path('check') }}">
+					{% for job in jobs %}
+						<tr>
+							
+							<td>{{ job.id }}.{{ job.type }}</td>
+							<td>{{job.files|join('_') }}</td>
+							<td>
+								{% if job.status == 'work' %}
+									<div class="spinner-border text-warning" role="status">
+										<span class="sr-only"></span>
+									</div>
+								{% else %}
+									<a href="/uploads/wp/result/{{ job.id }}.{{ job.type }}" taget="_blank" class="btn btn-success">Download</a>
+									<a href="{{ path('delete', {'name': job.id, 'type': job.type }) }}" class="delete-btn btn btn-danger">Delete</a>
+								{% endif %}
+							</td>
+							
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
